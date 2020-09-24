@@ -1,0 +1,64 @@
+import url('https://fonts.googleapis.com/css?family=Indie+Flower|Tangerine&display=swap');
+:root {
+--green-dark: #006400;
+--silver: #C0C0C0;
+--font-family-sans-serif: 'Indie Flower', 'Tangerine'';
+}
+
+body{
+font-family: var(--font-family-sans-serif);
+}
+
+.flower-font {
+    font-family: 'Indie Flower';
+    font-display: swap;
+}
+
+.site-header .site-title{
+    font-size: 6em;
+    color: var(--silver);
+    text-align: center;
+}
+
+.site-header .nav-link {
+    position: relative;
+    padding-bottom: 0;
+    margin-bottom: 2px;
+}
+
+.site-header .nav-link:before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    max-width: 100px;
+    height: 2px;
+    left: 0;
+    bottom: 0;
+    background-color: var(--silver);
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-out;
+}
+
+.site-header .nav-link:hover:before {
+    visibility: visible;
+    left: 0;
+    transform: scaleX(1);
+}
+
+
+@media screen and (min-width: 768px) {
+    #page-floater {
+        margin: 150px 0 150px 0;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .site-header .page-section-title {
+        font-size: 3em;
+        font-family: var(--font-family-sans-serif);
+        font-display: swap;
+        font-weight: 150;
+        color: var(--green-dark)
+    }
+}
