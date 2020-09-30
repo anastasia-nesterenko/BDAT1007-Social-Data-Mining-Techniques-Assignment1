@@ -1,5 +1,5 @@
 from firebase import firebase
-from flask import Flask
+from flask import Flask, json
 from flask import render_template
 
 app = Flask(__name__)
@@ -17,16 +17,22 @@ def about():
 
 
 @app.route('/games')
-def get_orders():
+def get_games():
     content = firebaseApp.get('/games', None)
+    array = []
     if content is not None:
-        return render_template('games.html', content=content)
+        temp_serialized = json.dumps(content)
+        temp_json = json.loads(temp_serialized)
+        for item in temp_json:
+            array.append(temp_json[item])
+
+        return render_template('games.html', content=array)
     else:
         return render_template('games.html')
 
 
 @app.route('/games/<int:game_id>')
-def get_order_by_id(game_id):
+def get_game_by_id(game_id):
     content = firebaseApp.get('/games/' + str(game_id), None)
     if content is not None:
         return content
