@@ -50,11 +50,13 @@
     </h1>
 </header>
 
-<div class="row justify-content-center py-3">
-    <h1 class="site-title text-light flower-font">Game list
-    </h1>
-    <button type="button" class="btn btn-light btn-sm px-4 mx-5" data-toggle="modal" data-target="#addModal">Add
-    </button>
+<div class="container-fluid">
+    <div class="row justify-content-center py-3">
+        <h1 class="site-title text-light flower-font">Game list
+        </h1>
+        <button type="button" class="btn btn-light btn-sm px-4 mx-5" data-toggle="modal" data-target="#addModal">Add
+        </button>
+    </div>
 </div>
 
 <div id="addModal" class="modal fade" role="dialog">
@@ -249,6 +251,7 @@
         $(this).find('.modal-body textarea').val(gameDescription)
         $(this).find('.modal-body input[name="game-image-url"]').val(gameUrl)
     })
+
 
 </script>
 
