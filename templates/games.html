@@ -90,10 +90,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <form method="post" action="/">
-                    <button name="add_game" value="add" type="button" class="btn btn-dark" type="submit"
-                            data-dismiss="modal">Add
-                    </button>
+                <form method="post" action="/games">
+                    <input type="submit" name="add_game" value="Add" class="btn btn-dark">
                 </form>
                 <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
             </div>
@@ -251,6 +249,8 @@
         $(this).find('.modal-body textarea').val(gameDescription)
         $(this).find('.modal-body input[name="game-image-url"]').val(gameUrl)
     })
+
+
 
 
 </script>
