@@ -1,7 +1,6 @@
 from firebase import firebase
-from flask import Flask, json, request, url_for
+from flask import Flask, json, request
 from flask import render_template
-from werkzeug.utils import redirect
 
 app = Flask(__name__)
 firebaseApp = firebase.FirebaseApplication('https://letzteleben-398ef.firebaseio.com/', None)
@@ -33,7 +32,11 @@ def games():
 def get_game_by_id(game_id):
     content = firebaseApp.get('/games/' + str(game_id), None)
     if content is not None:
-        return content
+        temp_serialized = json.dumps(content)
+        temp_json = json.loads(temp_serialized)
+        submission_successful = True
+        return render_template("games.html", content=allGames, game=temp_json,
+                               submission_successful=submission_successful)
     else:
         return "No data about this game"
 
@@ -48,6 +51,8 @@ def firebase_get_games():
             array.append(temp_json[item])
     return array
 
+
+allGames = firebase_get_games()
 
 if __name__ == "__main__":
     app.run()

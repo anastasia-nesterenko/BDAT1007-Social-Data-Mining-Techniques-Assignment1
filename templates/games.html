@@ -128,6 +128,17 @@
     </div>
 </div>
 
+{% if submission_successful %}
+    <script>
+    var game_to_view = JSON.parse('{{ game | tojson | safe}}');
+        $('#viewModal').find('.modal-header>h4').text(game_to_view['name'])
+        $('#viewModal').find('.modal-body textarea').val(game_to_view['description'])
+        $('#viewModal').find('.modal-body input').val(game_to_view['url'])
+
+        $('#viewModal').modal();
+    </script>
+{% endif %}
+
 <div id="editModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content py-2 px-2 my-2 mx-2">
@@ -249,6 +260,16 @@
         $(this).find('.modal-body textarea').val(gameDescription)
         $(this).find('.modal-body input[name="game-image-url"]').val(gameUrl)
     })
+
+
+
+
+
+
+
+
+
+
 
 
 
