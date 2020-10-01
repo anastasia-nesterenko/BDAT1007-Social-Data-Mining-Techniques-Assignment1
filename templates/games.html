@@ -12,11 +12,20 @@
           media="screen">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
           media="screen">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
     <title>Data Mining</title>
 </head>
 <body data-spy="scroll" data-target=".site-nav" data-offset="55" class="bg-secondary">
 <header id="page-home" class="site-header bg-dark">
-
     <nav class="site-nav navbar text-uppercase navbar-expand-sm navbar-dark  fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand flower-font" href="/">
@@ -40,7 +49,6 @@
         Data Mining
     </h1>
 </header>
-
 
 <div class="row justify-content-center py-3">
     <h1 class="site-title text-light flower-font">Game list
@@ -74,15 +82,19 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" type="submit" data-dismiss="modal">Add</button>
+                <form method="post" action="/">
+                    <button name="add_game" value="add" type="button" class="btn btn-dark" type="submit"
+                            data-dismiss="modal">Add
+                    </button>
+                </form>
                 <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
-<p id="demo"></p>
-<div id="viewModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+
+<div id="viewModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
         <div class="modal-content py-2 px-2 my-2 mx-2">
             <div class="modal-header">
                 <h4 class="modal-title">GAME</h4>
@@ -93,11 +105,11 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Description:</span>
                     </div>
-                    <textarea class="form-control" readonly aria-label="Description"></textarea>
+                    <textarea class="form-control" readonly aria-label="Description" rows="7"></textarea>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="text" readonly class="form-control" value="Image url"
-                           aria-label="Image url" aria-describedby="basic-addon2">
+                    <input type="text" readonly class="form-control" aria-label="Image url"
+                           aria-describedby="basic-addon2" id="gameUrl" name="gameUrl" value="1">
                 </div>
             </div>
             <div class="modal-footer">
@@ -107,6 +119,18 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('#viewModal').on('show.bs.modal', function (event) {
+        let gameName = $(event.relatedTarget).data('gamename')
+        let gameDescription = $(event.relatedTarget).data('gamedescription')
+        let gameUrl = $(event.relatedTarget).data('gameurl')
+        $(this).find('.modal-header>h4').text(gameName)
+        $(this).find('.modal-body textarea').val(gameDescription)
+        $(this).find('.modal-body input').val(gameUrl)
+    })
+</script>
+
 <div id="editModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content py-2 px-2 my-2 mx-2">
@@ -172,7 +196,9 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                                        data-target="#viewModal">View
+                                        data-target="#viewModal" data-gamename='{{item["name"]}}'
+                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
+                                    View
                                 </button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
                                         data-target="#editModal">Edit
@@ -197,16 +223,6 @@
                 class="fa fa-github fa-4x" aria-hidden="true"></i></a>
     </section>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
 <script async src="https://kit.fontawesome.com/3870d6946e.js" crossorigin="anonymous"></script>
 </body>
 </html>
