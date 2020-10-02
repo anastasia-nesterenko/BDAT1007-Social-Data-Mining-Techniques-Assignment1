@@ -28,15 +28,19 @@ def games():
             return {'id': 10000}, 200
 
 
-@app.route('/games/<int:game_id>')
+@app.route('/games/<int:game_id>', methods=['GET', 'DELETE'])
 def get_game_by_id(game_id):
     content = firebaseApp.get('/games/' + str(game_id), None)
     if content is not None:
         temp_serialized = json.dumps(content)
         temp_json = json.loads(temp_serialized)
-        submission_successful = True
-        return render_template("games.html", content=allGames, game=temp_json,
-                               submission_successful=submission_successful)
+        if request.method == 'GET':
+            submission_successful = True
+            return render_template("games.html", content=firebase_get_games(), game=temp_json,
+                                   submission_successful=submission_successful)
+        elif request.method == 'DELETE':
+            # TODO Delete game
+            return {'id': game_id, 'status': 'was deleted'}, 200
     else:
         return "No data about this game"
 
@@ -48,11 +52,9 @@ def firebase_get_games():
         temp_serialized = json.dumps(content)
         temp_json = json.loads(temp_serialized)
         for item in temp_json:
-            array.append(temp_json[item])
+            array.append(item)
     return array
 
-
-allGames = firebase_get_games()
 
 if __name__ == "__main__":
     app.run()
