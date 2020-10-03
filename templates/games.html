@@ -90,6 +90,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <!--               TODO Pass game details to /games POST-->
                 <form method="post" action="/games">
                     <input type="submit" name="add_game" value="Add" class="btn btn-dark">
                 </form>
@@ -129,14 +130,15 @@
 </div>
 
 {% if submission_successful %}
-    <script>
+<script>
         var game_to_view = JSON.parse('{{ game | tojson | safe}}');
             $('#viewModal').find('.modal-header>h4').text(game_to_view['name'])
             $('#viewModal').find('.modal-body textarea').val(game_to_view['description'])
             $('#viewModal').find('.modal-body input').val(game_to_view['url'])
 
             $('#viewModal').modal();
-    </script>
+
+</script>
 {% endif %}
 
 <div id="editModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
@@ -170,7 +172,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" type="submit" data-dismiss="modal">Save</button>
+                <!--TODO Pass game_id to '/games/<int:game_id>' for UPDATE-->
+                <form method="post" action="/games/11">
+                    <input type="submit" name="edit_game" value="Edit" class="btn btn-dark">
+                </form>
                 <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -188,7 +193,7 @@
                 <p>Are you sure you want to remove this game?</p>
             </div>
             <div class="modal-footer">
-                <!--Pass game_id to '/games/<int:game_id>' for DELETE-->
+                <!--TODO Pass game_id to '/games/<int:game_id>' for DELETE-->
                 <button type="button" class="btn btn-dark" type="submit" data-dismiss="modal">Remove</button>
                 <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
             </div>
@@ -211,13 +216,13 @@
                         <p class="card-text">{{item['description']}}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <!--Pass game_id to '/games/<int:game_id>' GET-->
+                                <!--TODO Pass game_id to '/games/<int:game_id>' GET-->
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                                        data-target="#viewModal" data-gamename='{{item["name"]}}'
+                                        data-target="#viewModal" data-gameid='{{item["id"]}}'
+                                        data-gamename='{{item["name"]}}'
                                         data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
                                     View
                                 </button>
-                                <!--Pass game_id to '/games/<int:game_id>' UPDATE-->
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
                                         data-target="#editModal" data-gamename='{{item["name"]}}'
                                         data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
@@ -263,8 +268,6 @@
         $(this).find('.modal-body textarea').val(gameDescription)
         $(this).find('.modal-body input[name="game-image-url"]').val(gameUrl)
     })
-
-
 
 
 </script>
