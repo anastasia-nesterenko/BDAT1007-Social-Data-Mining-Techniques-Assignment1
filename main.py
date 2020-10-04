@@ -1,3 +1,5 @@
+import requests
+from bs4 import BeautifulSoup
 from firebase import firebase
 from flask import Flask, json, request
 from flask import render_template
@@ -65,9 +67,40 @@ def get_game_by_id(game_id):
 
 
 @app.route('/scrape')
-# TODO Scrapping
 def scrape():
-    return ""
+    # Collect first page of games’ list (Collecting and Parsing data)
+    page = requests.get(
+        'https://web.archive.org/web/20201001124341/https://www.metacritic.com/browse/games/score/metascore/all/pc/filtered')
+
+    # Create a BeautifulSoup object
+    soup = BeautifulSoup(page.text, 'html.parser')
+
+    # Pull all text from the clamp-image-wrap
+    games_image_name_list = soup.find_all(class_='clamp-image-wrap')
+
+    # Remove img tags for class mcmust
+    must_links = soup.find_all(class_='mcmust')
+    for link in must_links:
+        link.decompose()
+
+    # Pull src and alt from all instances of img tag
+    games_image_list_items = []
+    games_name_list_items = []
+    for item in games_image_name_list:
+        for img in item.find_all('img'):
+            games_image_list_items.append(img.get('src'))
+            games_name_list_items.append(img.get('alt'))
+
+    # Pull all text from the summary
+    games_desc_list = soup.find_all(class_='summary')
+    games_desc_list_items = []
+    for item in games_desc_list:
+        games_desc_list_items.append(item.get_text())
+
+    result = ''
+    for i in range(0, len(games_image_list_items), 1):
+        result += '\n\t' + games_name_list_items[i] + '\n' + games_image_list_items[i] + '\n' + games_desc_list_items[i]
+    return result
 
 
 def firebase_get_games():
