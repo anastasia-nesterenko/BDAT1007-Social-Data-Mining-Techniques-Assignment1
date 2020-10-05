@@ -15,6 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>
@@ -138,6 +139,20 @@
 
             $('#viewModal').modal();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 {% endif %}
 
@@ -193,8 +208,10 @@
                 <p>Are you sure you want to remove this game?</p>
             </div>
             <div class="modal-footer">
-                <!--TODO Pass game_id to '/games/<int:game_id>' for DELETE-->
-                <button type="button" class="btn btn-dark" type="submit" data-dismiss="modal">Remove</button>
+                <button type="button" class="btn btn-dark" id='remove-button' type="submit" data-dismiss="modal"
+                        value='5'
+                        onclick="remove_game()">Remove
+                </button>
                 <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -228,7 +245,9 @@
                                         data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
                                     Edit
                                 </button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-gameid='{{item["id"]}}' data-gamename='{{item["name"]}}'
+                                        data-toggle="modal"
                                         data-target="#removeModal">Remove
                                 </button>
                             </div>
@@ -268,8 +287,18 @@
         $(this).find('.modal-body textarea').val(gameDescription)
         $(this).find('.modal-body input[name="game-image-url"]').val(gameUrl)
     })
+    $('#removeModal').on('show.bs.modal', function (event) {
+        let gameId = $(event.relatedTarget).data('gameid')
+        let gameName = $(event.relatedTarget).data('gamename')
+        $(this).find('.modal-body p').text('Are you sure you want to remove '+gameName+'?')
+    })
 
-
+    function remove_game(){
+        $.ajax({
+           url: "/games/"+$('#remove-button').val(),
+           type: 'DELETE'
+        });
+    }
 </script>
 
 <script async src="https://kit.fontawesome.com/3870d6946e.js" crossorigin="anonymous"></script>

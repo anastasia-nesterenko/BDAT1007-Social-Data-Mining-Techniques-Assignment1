@@ -61,7 +61,8 @@ def get_game_by_id(game_id):
             return render_template('games.html', content=firebase_get_games())
         elif request.method == 'DELETE':
             firebase_delete_game(game_id)
-            return {'id': game_id, 'status': 'was deleted'}, 200
+            # TODO update page after deleting item
+            return render_template('games.html', content=firebase_get_games())
     else:
         return "No data about this game"
 
@@ -128,4 +129,5 @@ def firebase_delete_game(game_id):
 
 
 if __name__ == "__main__":
+    app.config.update(TEMPLATES_AUTO_RELOAD=True)
     app.run()
