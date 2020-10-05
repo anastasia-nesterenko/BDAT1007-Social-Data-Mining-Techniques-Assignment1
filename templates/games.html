@@ -46,15 +46,9 @@
             </div>
         </div>
     </nav>
-<<<<<<< Updated upstream
-    <h1 class="site-title text-light flower-font" style="text-align:center">
-        GAMERS HUB
-    </h1>
-=======
             <h1 class="site-title text-light flower-font" style="text-align:center">
                 HUB 4 GAMERS
             </h1>
->>>>>>> Stashed changes
 </header>
 
 <div class="container-fluid">
@@ -117,7 +111,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Description:</span>
                     </div>
-                    <textarea class="form-control" readonly aria-label="Description" rows="7"></textarea>
+                    <textarea class="form-control" readonly aria-label="Description" rows="12"></textarea>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -242,20 +236,16 @@
                             <div class="btn-group">
                                 <!--TODO Pass game_id to '/games/<int:game_id>' GET-->
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                                        data-target="#viewModal" data-gameid='{{item["id"]}}'
-                                        data-gamename='{{item["name"]}}'
-                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
-                                    Detail
+                                        data-target="#viewModal" data-gameid='{{item["id"]}}' data-gamename='{{item["name"]}}'
+                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>Detail
                                 </button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
                                         data-target="#editModal" data-gamename='{{item["name"]}}'
-                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
-                                    Edit
+                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>Edit
                                 </button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary"
                                         data-gameid='{{item["id"]}}' data-gamename='{{item["name"]}}'
-                                        data-toggle="modal"
-                                        data-target="#removeModal">Delete
+                                        data-toggle="modal" data-target="#removeModal">Delete
                                 </button>
                             </div>
                         </div>
