@@ -30,7 +30,7 @@
     <nav class="site-nav navbar text-uppercase navbar-expand-sm navbar-dark  fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand flower-font" href="/">
-                <i class="fas fa-brain">BDAT</i>
+                <i class="fas fa-brain">BDAT1007</i>
             </a>
             <div class="collapse navbar-collapse" id="myTogglerNav">
                 <div class="navbar-nav ml-auto">
@@ -46,16 +46,20 @@
             </div>
         </div>
     </nav>
-    <h1 class="site-title text-light flower-font">
-        Data Mining
+<<<<<<< Updated upstream
+    <h1 class="site-title text-light flower-font" style="text-align:center">
+        GAMERS HUB
     </h1>
+=======
+            <h1 class="site-title text-light flower-font" style="text-align:center">
+                HUB 4 GAMERS
+            </h1>
+>>>>>>> Stashed changes
 </header>
 
 <div class="container-fluid">
     <div class="row justify-content-center py-3">
-        <h1 class="site-title text-light flower-font">Game list
-        </h1>
-        <button type="button" class="btn btn-light btn-sm px-4 mx-5" data-toggle="modal" data-target="#addModal">Add
+        <button type="button" class="btn btn-light btn-sm px-4 mx-5" data-toggle="modal" data-target="#addModal">New Game
         </button>
     </div>
 </div>
@@ -64,7 +68,7 @@
     <div class="modal-dialog">
         <div class="modal-content py-2 px-2 my-2 mx-2">
             <div class="modal-header">
-                <h4 class="modal-title">Add new game</h4>
+                <h4 class="modal-title">New Game</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <form method="post" action="/games">
@@ -124,7 +128,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" type="reset" data-dismiss="modal">Done</button>
+                <button type="button" class="btn btn-dark" type="reset" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -163,7 +167,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content py-2 px-2 my-2 mx-2">
             <div class="modal-header">
-                <h4 class="modal-title">Edit game</h4>
+                <h4 class="modal-title">Edit Game</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -192,7 +196,7 @@
             <div class="modal-footer">
                 <!--TODO Pass game_id to '/games/<int:game_id>' for UPDATE-->
                 <form method="post" action="/games/11">
-                    <input type="submit" name="edit_game" value="Edit" class="btn btn-dark">
+                    <input type="submit" name="edit_game" value="Save" class="btn btn-dark">
                 </form>
                 <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
             </div>
@@ -204,16 +208,16 @@
     <div class="modal-dialog">
         <div class="modal-content py-2 px-2 my-2 mx-2">
             <div class="modal-header">
-                <h4 class="modal-title">Remove game</h4>
+                <h4 class="modal-title">Delete Game</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to remove this game?</p>
+                <p>Are you sure you want to delete this game?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" id='remove-button' type="submit" data-dismiss="modal"
                         value='5'
-                        onclick="remove_game()">Remove
+                        onclick="remove_game()">Delete
                 </button>
                 <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
             </div>
@@ -241,7 +245,7 @@
                                         data-target="#viewModal" data-gameid='{{item["id"]}}'
                                         data-gamename='{{item["name"]}}'
                                         data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
-                                    View
+                                    Detail
                                 </button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
                                         data-target="#editModal" data-gamename='{{item["name"]}}'
@@ -251,7 +255,7 @@
                                 <button type="button" class="btn btn-sm btn-outline-secondary"
                                         data-gameid='{{item["id"]}}' data-gamename='{{item["name"]}}'
                                         data-toggle="modal"
-                                        data-target="#removeModal">Remove
+                                        data-target="#removeModal">Delete
                                 </button>
                             </div>
                         </div>
