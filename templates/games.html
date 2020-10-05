@@ -67,36 +67,36 @@
                 <h4 class="modal-title">Add new game</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
-                <p>Please fill the following fields.</p>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Game Title:</span>
+            <form method="post" action="/games">
+                <div class="modal-body">
+                    <p>Please fill the following fields.</p>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Game Title:</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Please enter game title"
+                               aria-label="Game title" aria-describedby="basic-addon2" name="game-title">
                     </div>
-                    <input type="text" class="form-control" placeholder="Please enter game title"
-                           aria-label="Game title" aria-describedby="basic-addon2">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Description:</span>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Description:</span>
+                        </div>
+                        <textarea class="form-control" aria-label="Description" rows="7"
+                                  name="game-description"></textarea>
                     </div>
-                    <textarea class="form-control" aria-label="Description" rows="7"></textarea>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Image URL:</span>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Image URL:</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Please enter the url of the image"
+                               aria-label="Image url" aria-describedby="basic-addon2" name="game-image-url">
                     </div>
-                    <input type="text" class="form-control" placeholder="Please enter the url of the image"
-                           aria-label="Image url" aria-describedby="basic-addon2">
                 </div>
-            </div>
-            <div class="modal-footer">
-                <!--               TODO Pass game details to /games POST-->
-                <form method="post" action="/games">
+                <div class="modal-footer">
                     <input type="submit" name="add_game" value="Add" class="btn btn-dark">
-                </form>
-                <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
-            </div>
+                    <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -138,6 +138,9 @@
             $('#viewModal').find('.modal-body input').val(game_to_view['url'])
 
             $('#viewModal').modal();
+
+
+
 
 
 
