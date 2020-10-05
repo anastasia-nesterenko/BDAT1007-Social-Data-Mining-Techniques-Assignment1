@@ -73,6 +73,37 @@ def get_game_by_id(game_id):
 
 @app.route('/scrape')
 def scrape():
+    web_scrape_result = web_scrape()
+    for game in web_scrape_result:
+        firebase_add_game(game)
+    return {'status': "uploaded scrapped games to firebase DB"}, 200
+
+
+def firebase_get_games():
+    content = firebaseApp.get('/games', None)
+    array = []
+    if content is not None:
+        temp_serialized = json.dumps(content)
+        temp_json = json.loads(temp_serialized)
+        for item in temp_json:
+            if item is not None:
+                array.append(item)
+    return array
+
+
+def firebase_add_game(game: Game):
+    result = firebaseApp.patch('/games/' + str(game.id),
+                               data={'description': game.description, 'id': game.id, 'name': game.name,
+                                     'url': game.url})
+    return result
+
+
+def firebase_delete_game(game_id):
+    firebaseApp.delete('/games', game_id)
+    return ""
+
+
+def web_scrape():
     # Collect first page of games’ list (Collecting and Parsing data)
     page = requests.get(
         'https://web.archive.org/web/20201001124341/https://www.metacritic.com/browse/games/score/metascore/all/pc/filtered')
@@ -102,34 +133,11 @@ def scrape():
     for item in games_desc_list:
         games_desc_list_items.append(item.get_text())
 
-    result = ''
+    result_array = []
     for i in range(0, len(games_image_list_items), 1):
-        result += '\n\t' + games_name_list_items[i] + '\n' + games_image_list_items[i] + '\n' + games_desc_list_items[i]
-    return result
-
-
-def firebase_get_games():
-    content = firebaseApp.get('/games', None)
-    array = []
-    if content is not None:
-        temp_serialized = json.dumps(content)
-        temp_json = json.loads(temp_serialized)
-        for item in temp_json:
-            if item is not None:
-                array.append(temp_json[item])
-    return array
-
-
-def firebase_add_game(game: Game):
-    result = firebaseApp.patch('/games/' + str(game.id),
-                               data={'description': game.description, 'id': game.id, 'name': game.name,
-                                     'url': game.url})
-    return result
-
-
-def firebase_delete_game(game_id):
-    firebaseApp.delete('/games', game_id)
-    return ""
+        game = Game(games_name_list_items[i], i + 1, games_desc_list_items[i], games_image_list_items[i])
+        result_array.append(game)
+    return result_array
 
 
 if __name__ == "__main__":
