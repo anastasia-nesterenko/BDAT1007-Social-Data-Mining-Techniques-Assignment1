@@ -46,6 +46,13 @@ font-family: var(--font-family-sans-serif);
     transform: scaleX(1);
 }
 
+.card-text{
+    line-height: 2.5ex;
+    height: 12.5ex;
+    color: var(--silver);
+    word-wrap: break-word;
+    overflow: hidden;
+}
 
 @media screen and (min-width: 768px) {
     #page-floater {
