@@ -283,7 +283,10 @@
     function remove_game(){
         $.ajax({
            url: "/games/"+$('#remove-button').val(),
-           type: 'DELETE'
+           type: 'DELETE',
+           success: function(data){
+                location.reload();
+            }
         });
     }
     function edit_game(){
@@ -298,7 +301,10 @@
            url: "/games/"+$('#edit-button').val(),
            contentType: 'application/json',
            data: JSON.stringify(game),
-           type: 'POST'
+           type: 'POST',
+           success: function(data){
+                location.reload();
+            }
         });
     }
 

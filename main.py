@@ -60,11 +60,9 @@ def get_game_by_id(game_id):
             game_json = request.get_json()
             game = Game(game_json['name'], game_id, game_json['description'], game_json['url'])
             firebase_add_game(game)
-            # TODO update page after updating item
             return render_template('games.html', content=firebase_get_games())
         elif request.method == 'DELETE':
             firebase_delete_game(game_id)
-            # TODO update page after deleting item
             return render_template('games.html', content=firebase_get_games())
     else:
         return "No data about this game"
