@@ -46,14 +46,15 @@
             </div>
         </div>
     </nav>
-            <h1 class="site-title text-light flower-font" style="text-align:center">
-                HUB 4 GAMERS
-            </h1>
+    <h1 class="site-title text-light flower-font" style="text-align:center">
+        HUB 4 GAMERS
+    </h1>
 </header>
 
 <div class="container-fluid">
     <div class="row justify-content-center py-3">
-        <button type="button" class="btn btn-light btn-sm px-4 mx-5" data-toggle="modal" data-target="#addModal">New Game
+        <button type="button" class="btn btn-light btn-sm px-4 mx-5" data-toggle="modal" data-target="#addModal">New
+            Game
         </button>
     </div>
 </div>
@@ -136,24 +137,6 @@
             $('#viewModal').find('.modal-body input').val(game_to_view['url'])
 
             $('#viewModal').modal();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 {% endif %}
 
@@ -188,10 +171,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <!--TODO Pass game_id to '/games/<int:game_id>' for UPDATE-->
-                <form method="post" action="/games/11">
-                    <input type="submit" name="edit_game" value="Save" class="btn btn-dark">
-                </form>
+                <button type="button" class="btn btn-dark" id='edit-button' type="submit" data-dismiss="modal"
+                        onclick="edit_game()">Edit
+                </button>
                 <button type="button" class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -236,12 +218,16 @@
                             <div class="btn-group">
                                 <!--TODO Pass game_id to '/games/<int:game_id>' GET-->
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                                        data-target="#viewModal" data-gameid='{{item["id"]}}' data-gamename='{{item["name"]}}'
-                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>Detail
+                                        data-target="#viewModal" data-gameid='{{item["id"]}}'
+                                        data-gamename='{{item["name"]}}'
+                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
+                                    Detail
                                 </button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
-                                        data-target="#editModal" data-gamename='{{item["name"]}}'
-                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>Edit
+                                        data-target="#editModal" data-gameid='{{item["id"]}}'
+                                        data-gamename='{{item["name"]}}'
+                                        data-gamedescription='{{item["description"]}}' data-gameurl='{{item["url"]}}'>
+                                    Edit
                                 </button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary"
                                         data-gameid='{{item["id"]}}' data-gamename='{{item["name"]}}'
@@ -276,10 +262,12 @@
         $(this).find('.modal-body input').val(gameUrl)
     })
     $('#editModal').on('show.bs.modal', function (event) {
+        let gameId = $(event.relatedTarget).data('gameid')
         let gameName = $(event.relatedTarget).data('gamename')
         let gameDescription = $(event.relatedTarget).data('gamedescription')
         let gameUrl = $(event.relatedTarget).data('gameurl')
 
+        document.getElementById("edit-button").value=gameId;
         $(this).find('.modal-body input[name="game-title"]').val(gameName)
         $(this).find('.modal-body textarea').val(gameDescription)
         $(this).find('.modal-body input[name="game-image-url"]').val(gameUrl)
@@ -287,6 +275,8 @@
     $('#removeModal').on('show.bs.modal', function (event) {
         let gameId = $(event.relatedTarget).data('gameid')
         let gameName = $(event.relatedTarget).data('gamename')
+
+        document.getElementById("remove-button").value=gameId;
         $(this).find('.modal-body p').text('Are you sure you want to remove '+gameName+'?')
     })
 
@@ -296,6 +286,23 @@
            type: 'DELETE'
         });
     }
+    function edit_game(){
+        var game = {
+            'name': $('#editModal').find('.modal-body input[name="game-title"]').val(),
+            'description': $('#editModal').find('.modal-body textarea').val(),
+            'url': $('#editModal').find('.modal-body input[name="game-image-url"]').val(),
+            'id': $('#edit-button').val()
+        }
+
+        $.ajax({
+           url: "/games/"+$('#edit-button').val(),
+           contentType: 'application/json',
+           data: JSON.stringify(game),
+           type: 'POST'
+        });
+    }
+
+
 </script>
 
 <script async src="https://kit.fontawesome.com/3870d6946e.js" crossorigin="anonymous"></script>
