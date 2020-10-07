@@ -129,7 +129,7 @@ def web_scrape():
     games_desc_list = soup.find_all(class_='summary')
     games_desc_list_items = []
     for item in games_desc_list:
-        games_desc_list_items.append(item.get_text())
+        games_desc_list_items.append(item.get_text().strip())
 
     result_array = []
     for i in range(0, len(games_image_list_items), 1):
